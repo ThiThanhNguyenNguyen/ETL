@@ -1,0 +1,1196 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/22/2021 2:39:07 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="LAPTOP-O352LAHI"
+  DTS:CreatorName="LAPTOP-O352LAHI\nguye"
+  DTS:DTSID="{D83C7EB8-4506-4F16-AC4D-BD5027BDD6C1}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="4105"
+  DTS:ObjectName="Load_Source_File_to_Stg"
+  DTS:PackageType="5"
+  DTS:VersionBuild="40"
+  DTS:VersionGUID="{407A37C2-C812-4B1D-8C61-4B739337A419}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.DataMart-STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A638C264-38A2-43E4-A4A4-D6A39756E38C}"
+      DTS:ObjectName="LocalHost.DataMart-STG">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=DataMart-STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RealEstatesForSale]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{B070BEF2-B4BB-4706-B75D-97184984E284}"
+      DTS:ObjectName="RealEstatesForSale">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::FileNamePath]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="4105"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Users\nguye\OneDrive\Desktop\csvFiles\RealEstatesForSale_2021-07-26.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Price"
+              DTS:DTSID="{F96F81AC-6239-442C-83C1-95B83E8AB8BB}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="1000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Address"
+              DTS:DTSID="{B2178AFE-6954-46D7-A5BB-A31AB95B54FC}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="100"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="NeighbourHood"
+              DTS:DTSID="{C237136A-7350-4106-B33B-B4B2E4DE5221}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Bed"
+              DTS:DTSID="{1DDFA924-D118-4E8C-99B4-60C966CF121C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Bath"
+              DTS:DTSID="{7C609894-7752-41EC-AC85-D10984995638}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Sqft"
+              DTS:DTSID="{4DEC40BC-FC3F-43F3-8488-BD58161718A9}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Title"
+              DTS:DTSID="{E9792087-1B5F-4FFD-89D7-A6477E4C7A0C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="100"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="YearsOld"
+              DTS:DTSID="{6C0DE2B9-6A97-45C2-AB86-F06BB6497C17}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="1000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ListedBy"
+              DTS:DTSID="{85FF1E5B-1CA0-4BC4-8321-E9E3F101219F}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Note"
+              DTS:DTSID="{D29522CC-9AC8-4344-85C8-4B56CA18CDC2}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="LoadDate"
+              DTS:DTSID="{81C86833-E4A7-4315-8B4C-98A80A5A8AC1}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="1000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Page"
+              DTS:DTSID="{8306250D-B8C2-42F1-8EFA-5EA69EDF8CEC}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Source"
+              DTS:DTSID="{1F924FA3-9018-4ED6-96EA-1F8BC74E2166}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F2098E12-2C3B-4295-8A4C-46BF0B0BE38B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileName">
+      <DTS:VariableValue
+        DTS:DataType="8">RealEstatesForSale_2021-07-26.csv</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8888CBFF-08A3-4622-A2CF-349D6D20F145}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Folder]+ @[User::SubFolder]+&quot;\\&quot;+ @[User::FileName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileNamePath">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Users\nguye\OneDrive\Desktop\csvFiles\RealEstatesForSale_2021-07-26.csv</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8D335BC5-32F7-4F22-85F5-EF302712A035}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Folder">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Users\nguye\OneDrive\Desktop\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9DF81718-0220-4101-A8A8-229293DBACE3}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Folder]+ @[User::SubFolder]+&quot;\\_&quot;+ @[User::FileName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewFileNamePath">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Users\nguye\OneDrive\Desktop\csvFiles\_RealEstatesForSale_2021-07-26.csv</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{82EEBEB9-1FB5-4B7B-843E-ED33D4108D91}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SubFolder">
+      <DTS:VariableValue
+        DTS:DataType="8">csvFiles</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Clean up Staging table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Truncate table before importing"
+      DTS:DTSID="{F9FB8074-BF67-4E7D-9373-DF749B5CCC09}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clean up Staging table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A638C264-38A2-43E4-A4A4-D6A39756E38C}"
+          SQLTask:SqlStatementSource="Truncate Table [dbo].[stgRealEstateForSale]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Loop CSV Files"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{107A5A28-03D7-41CD-8866-8E0D7ABF66C1}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Loop CSV Files">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{171C67C7-6AD2-4A50-A471-D034E6F81590}"
+        DTS:ObjectName="{171C67C7-6AD2-4A50-A471-D034E6F81590}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::Folder]+ @[User::SubFolder]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="C:\Users\nguye\OneDrive\Desktop\csvFiles" />
+            <FEFEProperty
+              FileSpec="RealEstatesForSale_????-??-??.csv" />
+            <FEFEProperty
+              FileNameRetrievalType="1" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Loop CSV Files\Data Flow Task"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{32b9a569-0b9c-4c61-8c6e-667a3717f4b2}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Data Flow Task"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Loop CSV Files\Data Flow Task\Flat File Source"
+                  componentClassID="Microsoft.FlatFileSource"
+                  contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Flat File Source"
+                  localeId="4105"
+                  name="Flat File Source"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether zero-length columns are treated as null."
+                      name="RetainNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                      name="FileNameColumnName"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Connections[FlatFileConnection]"
+                      connectionManagerID="Package.ConnectionManagers[RealEstatesForSale]"
+                      connectionManagerRefId="Package.ConnectionManagers[RealEstatesForSale]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output]"
+                      name="Flat File Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Price]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Price]"
+                          length="50"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Price]"
+                          name="Price"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Address]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Address]"
+                          length="1000"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Address]"
+                          name="Address"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[NeighbourHood]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[NeighbourHood]"
+                          length="100"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[NeighbourHood]"
+                          name="NeighbourHood"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Bed]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Bed]"
+                          length="50"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Bed]"
+                          name="Bed"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Bath]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Bath]"
+                          length="50"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Bath]"
+                          name="Bath"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Sqft]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Sqft]"
+                          length="50"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Sqft]"
+                          name="Sqft"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Title]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Title]"
+                          length="50"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Title]"
+                          name="Title"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[YearsOld]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[YearsOld]"
+                          length="100"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[YearsOld]"
+                          name="YearsOld"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[ListedBy]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ListedBy]"
+                          length="1000"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[ListedBy]"
+                          name="ListedBy"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Note]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Note]"
+                          length="50"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Note]"
+                          name="Note"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[LoadDate]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[LoadDate]"
+                          length="50"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[LoadDate]"
+                          name="LoadDate"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Page]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Page]"
+                          length="1000"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Page]"
+                          name="Page"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Source]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Source]"
+                          length="50"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Source]"
+                          name="Source"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Price]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Price" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Address]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1000"
+                          name="Address" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[NeighbourHood]"
+                          codePage="1252"
+                          dataType="str"
+                          length="100"
+                          name="NeighbourHood" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Bed]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Bed" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Bath]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Bath" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Sqft]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Sqft" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Title]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Title" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[YearsOld]"
+                          codePage="1252"
+                          dataType="str"
+                          length="100"
+                          name="YearsOld" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ListedBy]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1000"
+                          name="ListedBy" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Note]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Note" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[LoadDate]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="LoadDate" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Page]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1000"
+                          name="Page" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Source]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Source" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output]"
+                      isErrorOut="true"
+                      name="Flat File Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                          codePage="1252"
+                          dataType="text"
+                          description="Flat File Source Error Output Column"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                          name="Flat File Source Error Output Column" />
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[stgRealEstateForSale]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.DataMart-STG]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.DataMart-STG]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Price]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="Price"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Price]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Address]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="1000"
+                          cachedName="Address"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Address]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NeighbourHood]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="100"
+                          cachedName="NeighbourHood"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NeighbourHood]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[NeighbourHood]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Bed]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="Bed"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Bed]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Bed]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Bath]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="Bath"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Bath]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Bath]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sqft]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="Sqft"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sqft]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Sqft]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Title]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="Title"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Title]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[YearsOld]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="100"
+                          cachedName="YearsOld"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[YearsOld]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[YearsOld]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ListedBy]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="1000"
+                          cachedName="ListedBy"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ListedBy]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[ListedBy]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Note]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="Note"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Note]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Note]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LoadDate]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="LoadDate"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LoadDate]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[LoadDate]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Page]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="1000"
+                          cachedName="Page"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Page]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Page]" />
+                        <inputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Source]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="Source"
+                          externalMetadataColumnId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Source]"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Source]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Price" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2000"
+                          name="Address" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NeighbourHood]"
+                          codePage="1252"
+                          dataType="str"
+                          length="500"
+                          name="NeighbourHood" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Bed]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Bed" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Bath]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Bath" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sqft]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Sqft" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Title" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[YearsOld]"
+                          codePage="1252"
+                          dataType="str"
+                          length="100"
+                          name="YearsOld" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ListedBy]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2000"
+                          name="ListedBy" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Note]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Note" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LoadDate]"
+                          dataType="dbDate"
+                          name="LoadDate" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Page]"
+                          dataType="i4"
+                          name="Page" />
+                        <externalMetadataColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Source]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Source" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Loop CSV Files\Data Flow Task.Paths[Flat File Source Output]"
+                  endId="Package\Loop CSV Files\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="Flat File Source Output"
+                  startId="Package\Loop CSV Files\Data Flow Task\Flat File Source.Outputs[Flat File Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Loop CSV Files\Renaming CSV Files"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="File System Task"
+          DTS:DTSID="{7B32874E-593B-422C-99EE-30B463775BFA}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Renaming CSV Files"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="RenameFile"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="User::FileNamePath"
+              TaskIsSourceVariable="True"
+              TaskDestinationPath="User::NewFileNamePath"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Loop CSV Files.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{CA71904B-E1D3-4BBA-B0DD-F126E36423F5}"
+          DTS:From="Package\Loop CSV Files\Data Flow Task"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Loop CSV Files\Renaming CSV Files" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{72E625B2-0584-4CBA-8283-3D56A3E07FE6}"
+          DTS:ObjectName="{72E625B2-0584-4CBA-8283-3D56A3E07FE6}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::FileName" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{DC2D48ED-64CD-4694-B898-C896E39937B9}"
+      DTS:From="Package\Clean up Staging table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Loop CSV Files" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="183.2,41.6"
+          Id="Package\Clean up Staging table"
+          TopLeft="88.3333298232826,15.6000001239781" />
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Loop CSV Files\Data Flow Task"
+          TopLeft="62.5333308166929,54.0000014464062" />
+        <NodeLayout
+          Size="175.2,41.6"
+          Id="Package\Loop CSV Files\Renaming CSV Files"
+          TopLeft="51.0333303199875,149.800002252261" />
+        <EdgeLayout
+          Id="Package\Loop CSV Files.PrecedenceConstraints[Constraint]"
+          TopLeft="138.18333056834,95.6000014464062">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.2000008058546"
+              Start="0,0"
+              End="0,46.7000008058546">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.7000008058546" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="274.4,249.6"
+          Size="274.4,292.8"
+          Id="Package\Loop CSV Files"
+          TopLeft="38.3333318101037,90.1333340496488" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="177.733330816693,57.2000001239781">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.9333339256707"
+              Start="0,0"
+              End="0,25.4333339256707">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.4333339256707" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Loop CSV Files\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151.2,41.6"
+          Id="Package\Loop CSV Files\Data Flow Task\Flat File Source"
+          TopLeft="140.83332773712,96.200000764529" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Loop CSV Files\Data Flow Task\OLE DB Destination"
+          TopLeft="389.999984502793,242.666668595208" />
+        <EdgeLayout
+          Id="Package\Loop CSV Files\Data Flow Task.Paths[Flat File Source Output]"
+          TopLeft="216.43332773712,137.800000764529">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="259.166656765673,104.866667830679"
+              Start="0,0"
+              End="259.166656765673,97.3666678306793">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.4333339153397" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,48.4333339153397"
+                    Point2="0,52.4333339153397"
+                    Point3="4,52.4333339153397" />
+                  <mssgle:LineSegment
+                    End="255.166656765673,52.4333339153397" />
+                  <mssgle:CubicBezierSegment
+                    Point1="255.166656765673,52.4333339153397"
+                    Point2="259.166656765673,52.4333339153397"
+                    Point3="259.166656765673,56.4333339153397" />
+                  <mssgle:LineSegment
+                    End="259.166656765673,97.3666678306793" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop CSV Files\Data Flow Task\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
