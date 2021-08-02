@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using HtmlAgilityPack;
-using ScrapySharp.Extensions;
-using ScrapySharp.Network;
 using System.IO;
 using System.Globalization;
 using CsvHelper;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using AngleSharp.Html.Dom;
-using System.Net.Http;
-using System.Linq;
+using CsvHelper.Configuration;
+using System.Text;
 
 namespace GetHouseSaleInfo
 {
@@ -28,21 +23,50 @@ namespace GetHouseSaleInfo
             public string YearsOld { get; set; }
             public string ListedBy { get; set; }
             public string Note { get; set; }
-            public string Page { get; set; } 
+            
+            public string LoadDate { get; set; } = DateTime.Now.ToString("yyyy'-'MM'-'dd");
 
+            public int Page { get; set; }
+
+            public string Source { get; set; } = "https://www.zolo.ca";
+
+            /// <summary>
+            /// ///////////////
+            /// </summary>
+            /// <param name="args"></param>
             static void Main(string[] args)
             {
-                const int totalPages = 10;
-             
-                string url = "https://www.zolo.ca/index.php?sarea=&s=";
-                DateTime aDate = DateTime.Now;
-                string dateString = aDate.ToString("MMddyyyy");
-                string path = "C:/Users/nguye/OneDrive/Desktop/RealEstateForSale" + dateString + ".csv";
-                Console.WriteLine(dateString);
+              // Determine total page of the website
+                HtmlWeb web_ = new HtmlWeb();
+                HtmlDocument doc_ = web_.Load("https://www.zolo.ca/index.php?sarea=&s=1");
+                var xPath_ = @"//nav[@class='xs-hide md-flex']/a[@class='button button--mono button--large xs-mr1']"; 
+                var page = doc_.DocumentNode.SelectNodes(xPath_);
+                int totalPages = -1;
+                for (int i = 0; i < page.Count; ++i)
+                {
+                    if (page[i] != null)
+                    {
+                        var temp = page[i].InnerText;
+                        if (!temp.Equals(""))
+                        {
+                            int check = Int32.Parse(temp);
+                            if (check > totalPages)
+                            {
+                                totalPages = check;
+                            }
+                        }
+                    }
+                }
+               
 
+                string url = "https://www.zolo.ca/index.php?sarea=&s=";
+               
+                string dateString = DateTime.Now.ToString("yyyy'-'MM'-'dd");
+                string path = "C:/Users/nguye/OneDrive/Desktop/csvFiles/RealEstatesForSale_" + dateString + ".csv";
+                
                 var houses = new List<House>();
 
-                for (int j = 1; j < totalPages; j++)
+                for (int j = 1; j < totalPages + 1; j++)
                 {
                     string url_ = url + j;
 
@@ -81,114 +105,115 @@ namespace GetHouseSaleInfo
                         char[] myChar5 = { 'b', 'u', 'l', 'l', ';', '&' };
 
                         if (address != null)
-                            address_ = address.InnerText;
+                            address_ = address.InnerText.Trim();
                         else
-                            address_ = "Null";
+                            address_ = "";
 
                         if (price != null)
-                            price_ = price.InnerText.TrimStart(myChar);
+                            price_ = price.InnerText.TrimStart(myChar).Replace(",","").Trim();
                         else
-                            price_ = "Null";
+                            price_ = "";
 
                         if (title != null)
-                            title_ = title.InnerText;
+                            title_ = title.InnerText.Trim();
                         else
-                            title_ = "Null";
+                            title_ = "";
 
                         if (bed != null && !bed.InnerText.Contains("Register or Sign in"))
                         {
                             if ((bed.InnerText.Contains("–") || bed.InnerText.Contains("&ndash;")) && bed.InnerText.Contains("bed"))
-                                bed_ = "Null";
+                                bed_ = "";
                             else if (bed.InnerText.Contains("bed"))
                             {
-                                bed_ = bed.InnerText.TrimEnd(myChar1);
+                                bed_ = bed.InnerText.TrimEnd(myChar1).Trim();
                             }
                             else if (bed.InnerText.Contains("bath"))
                             {
-                                bath_ = bed.InnerText.TrimEnd(myChar2);
-                                bed_ = "Null";
+                                bath_ = bed.InnerText.TrimEnd(myChar2).Trim();
+                                bed_ = "";
                             }
                             else if (bed.InnerText.Contains("sqft"))
                             {
-                                sqft_ = bed.InnerText.TrimEnd(myChar3);
-                                bed_ = "Null";
-                                bath_ = "Null";
+                                sqft_ = bed.InnerText.TrimEnd(myChar3).Trim();
+                                bed_ = "";
+                                bath_ = "";
                             }
                             else
-                                bed_ = bed.InnerText;
+                                bed_ = bed.InnerText.Trim();
                         }
                         else
-                            bed_ = "Null";
+                            bed_ = "";
 
                         if (bath != null && !bath.InnerText.Contains("Register or Sign in"))
                         {
                             if ((bath.InnerText.Contains("–") || bath.InnerText.Contains("&ndash;")) && bath.InnerText.Contains("bath"))
-                                bath_ = "Null";
+                                bath_ = "";
                             else if (bath.InnerText.Contains("bed"))
                             {
-                                bed_ = bath.InnerText.TrimEnd(myChar1);
+                                bed_ = bath.InnerText.TrimEnd(myChar1).Trim();
                             }
                             else if (bath.InnerText.Contains("bath"))
                             {
-                                bath_ = bath.InnerText.TrimEnd(myChar2);
+                                bath_ = bath.InnerText.TrimEnd(myChar2).Trim();
                             }
                             else if (bath.InnerText.Contains("sqft"))
                             {
-                                sqft_ = bath.InnerText.TrimEnd(myChar3);
-                                bath_ = "Null";
+                                sqft_ = bath.InnerText.TrimEnd(myChar3).Trim();
+                                bath_ = "";
                             }
                             else
-                                bath_ = bath.InnerText;
+                                bath_ = bath.InnerText.Trim();
                         }
                         else
-                            bath_ = "Null";
+                            bath_ = "";
 
                         if (sqft != null && !sqft.InnerText.Contains("Register or Sign in"))
                         {
                             if ((sqft.InnerText.Contains("–") || sqft.InnerText.Contains("&ndash;")) && sqft.InnerText.Contains("sqft"))
                                 sqft_ = "Null";
                             else if (sqft.InnerText.Contains("bed"))
-                                bed_ = sqft.InnerText.TrimEnd(myChar1);
+                                bed_ = sqft.InnerText.TrimEnd(myChar1).Trim();
                             else if (sqft.InnerText.Contains("bath"))
-                                bath_ = sqft.InnerText.TrimEnd(myChar2);
+                                bath_ = sqft.InnerText.TrimEnd(myChar2).Trim();
                             else if (sqft.InnerText.Contains("sqft"))
-                                sqft_ = sqft.InnerText.TrimEnd(myChar3);
+                                sqft_ = sqft.InnerText.TrimEnd(myChar3).Trim();
                             else 
-                                sqft_ = sqft.InnerText;
+                                sqft_ = sqft.InnerText.Trim();
                         }
                         else
-                            sqft_ = "Null";
+                            sqft_ = "";
 
                         if (yearsOld != null)
                         {
-                            yearsOld_ = yearsOld.InnerText.TrimEnd(myChar4);
+                            yearsOld_ = yearsOld.InnerText.TrimEnd(myChar4).Trim();
                         }
                         else
-                            yearsOld_ = "Null";
+                            yearsOld_ = "";
 
                         if (neighbourhood != null)
-                            neighbourhood_ = neighbourhood.InnerText.TrimStart(myChar5);
+                            neighbourhood_ = neighbourhood.InnerText.TrimStart(myChar5).Trim();
                         else
-                            neighbourhood_ = "Null";
+                            neighbourhood_ = "";
 
                         if (listedBy != null)
-                            listedBy_ = listedBy.InnerText.TrimStart(myChar5);
+                            listedBy_ = listedBy.InnerText.TrimStart(myChar5).Trim();
                         else
-                            listedBy_ = "Null";
+                            listedBy_ = "";
 
-                        if (price_.Equals("Null"))
+                        if (price_.Equals(""))
                             note_ = "Register or sign in to view";
                         else
-                            note_ = "Null";
+                            note_ = "";
                             
-                        houses.Add(new House { Price = price_, Address = address_, ListedBy = listedBy_, Bed = bed_, Bath = bath_, Sqft = sqft_, Title = title_, YearsOld = yearsOld_, NeighbourHood = neighbourhood_, Note = note_, Page = "Page" + j });
+                        houses.Add(new House { Price = price_, Address = address_, ListedBy = listedBy_, Bed = bed_, Bath = bath_, Sqft = sqft_, Title = title_, YearsOld = yearsOld_, NeighbourHood = neighbourhood_, Note = note_, Page = j });
                     }
 
                 }
-
+               
                 using (var writer = new StreamWriter(path))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.CurrentCulture) { Delimiter = "|", Encoding = Encoding.UTF8 }))
                 {
+                   
                     csv.WriteRecords(houses);
                 }
             }
