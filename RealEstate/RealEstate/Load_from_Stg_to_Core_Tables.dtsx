@@ -11,8 +11,8 @@
   DTS:LocaleID="4105"
   DTS:ObjectName="Load_from_Stg_to_Core_Tables"
   DTS:PackageType="5"
-  DTS:VersionBuild="87"
-  DTS:VersionGUID="{5362401F-781F-4EFD-974E-7A1B56AFC466}">
+  DTS:VersionBuild="106"
+  DTS:VersionGUID="{0DE2FCC0-70C1-4C42-B2CB-C9A760F0452F}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -84,37 +84,48 @@
       DTS:CreationName=""
       DTS:DTSID="{8CC3E0A9-F1EA-488E-A76A-0608B6521B43}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="&quot;&#xA;SELECT a.Address, a.RealEstateForSaleId&#xA;INTO #tempTable&#xA;FROM [DataMart].[dbo].[rltRealEstateForSale] a&#xA;LEFT JOIN [dbo].[stgRealEstateForSale] b&#xA;ON a.Address = b.Address AND b.LoadDate = cast('&quot;+ (DT_WSTR, 50) @[User::LoadDate] +&quot;' as date)&#xA; WHERE b.Address IS NULL AND a.StartDate &lt; cast('&quot;+ (DT_WSTR, 50) @[User::LoadDate] +&quot;' as date);&#xA;&#xA;UPDATE a&#xA;Set EndDate = cast('&quot;+ (DT_WSTR, 50) @[User::LoadDate] +&quot;' as date)&#xA;FROM [DataMart].[dbo].[rltRealEstateForSale] a&#xA;JOIN #tempTable b on a.RealEstateForSaleId = b.RealEstateForSaleId&#xA; WHERE a.EndDate IS NULL;&#xA;&quot;"
+      DTS:Expression="&quot;&#xA;SELECT RTRIM(LTRIM(Address)) AS Address1, RealEstateForSaleId&#xA;INTO #tempTable1&#xA;FROM [DataMart].[dbo].[rltRealEstateForSale]&#xA;WHERE StartDate &lt; cast('&quot;+ (DT_WSTR, 50) @[User::LoadDate] +&quot;' as date)&#xA;;&#xA;SELECT RTRIM(LTRIM(Address)) AS Address2, LoadDate&#xA;INTO #tempTable2&#xA;FROM [dbo].[stgRealEstateForSale] &#xA;WHERE LoadDate = cast('&quot;+ (DT_WSTR, 50) @[User::LoadDate] +&quot;' as date)&#xA;;&#xA;SELECT a.Address1, a.RealEstateForSaleId&#xA;INTO #tempTable3&#xA;FROM #tempTable1 a&#xA;LEFT JOIN #tempTable2 b&#xA;ON a.Address1 = b.Address2 &#xA;WHERE b.Address2 IS NULL &#xA;;&#xA;UPDATE a&#xA;Set EndDate = cast('&quot;+ (DT_WSTR, 50) @[User::LoadDate] +&quot;' as date)&#xA;FROM [DataMart].[dbo].[rltRealEstateForSale] a&#xA;JOIN #tempTable3 b &#xA;ON a.RealEstateForSaleId = b.RealEstateForSaleId&#xA;WHERE a.EndDate IS NULL;&#xA;&quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="SqlCloseInactiveRecord">
       <DTS:VariableValue
         DTS:DataType="8">
-SELECT a.Address, a.RealEstateForSaleId
-INTO #tempTable
-FROM [DataMart].[dbo].[rltRealEstateForSale] a
-LEFT JOIN [dbo].[stgRealEstateForSale] b
-ON a.Address = b.Address AND b.LoadDate = cast('2021-07-28 3:02:00 PM' as date)
- WHERE b.Address IS NULL AND a.StartDate &lt; cast('2021-07-28 3:02:00 PM' as date);
-
+SELECT RTRIM(LTRIM(Address)) AS Address1, RealEstateForSaleId
+INTO #tempTable1
+FROM [DataMart].[dbo].[rltRealEstateForSale]
+WHERE StartDate &lt; cast('2021-07-28 3:02:00 PM' as date)
+;
+SELECT RTRIM(LTRIM(Address)) AS Address2, LoadDate
+INTO #tempTable2
+FROM [dbo].[stgRealEstateForSale] 
+WHERE LoadDate = cast('2021-07-28 3:02:00 PM' as date)
+;
+SELECT a.Address1, a.RealEstateForSaleId
+INTO #tempTable3
+FROM #tempTable1 a
+LEFT JOIN #tempTable2 b
+ON a.Address1 = b.Address2 
+WHERE b.Address2 IS NULL 
+;
 UPDATE a
 Set EndDate = cast('2021-07-28 3:02:00 PM' as date)
 FROM [DataMart].[dbo].[rltRealEstateForSale] a
-JOIN #tempTable b on a.RealEstateForSaleId = b.RealEstateForSaleId
- WHERE a.EndDate IS NULL;
+JOIN #tempTable3 b 
+ON a.RealEstateForSaleId = b.RealEstateForSaleId
+WHERE a.EndDate IS NULL;
 </DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
       DTS:DTSID="{D68AFC7F-EDE0-45A0-8719-C374BB6C9D34}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="&quot;DELETE FROM [DataMart].[dbo].[rltRealEstateForSale] WHERE StartDate = cast('&quot;+ (DT_WSTR, 50) @[User::LoadDate] +&quot;' as date);&#xA;DELETE FROM [DataMart].[dbo].[factRealEstateForSale] WHERE DateKey = cast('&quot;+ (DT_WSTR, 50) @[User::DateKey] +&quot;' as int);&quot;"
+      DTS:Expression="&quot;&#xA;DELETE FROM [DataMart].[dbo].[factRealEstateForSale] WHERE DateKey &gt;= cast('&quot;+ (DT_WSTR, 50) @[User::DateKey] +&quot;' as int);DELETE FROM [DataMart].[dbo].[rltRealEstateForSale] WHERE StartDate &gt;= cast('&quot;+ (DT_WSTR, 50) @[User::LoadDate] +&quot;' as date);&quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="SqlDeleteRecord">
       <DTS:VariableValue
-        DTS:DataType="8">DELETE FROM [DataMart].[dbo].[rltRealEstateForSale] WHERE StartDate = cast('2021-07-28 3:02:00 PM' as date);
-DELETE FROM [DataMart].[dbo].[factRealEstateForSale] WHERE DateKey = cast('20210728' as int);</DTS:VariableValue>
+        DTS:DataType="8">
+DELETE FROM [DataMart].[dbo].[factRealEstateForSale] WHERE DateKey &gt;= cast('20210728' as int);DELETE FROM [DataMart].[dbo].[rltRealEstateForSale] WHERE StartDate &gt;= cast('2021-07-28 3:02:00 PM' as date);</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -2707,13 +2718,27 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA]]></arrayElement>
                       description="Specifies the SQL statement that generates the lookup table."
                       expressionType="Notify"
                       name="SqlCommand"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[rltRealEstateForSale]</property>
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">WITH CTE_TEMP as
+(
+select * 
+,ROW_NUMBER() OVER (PARTITION BY [RealEstateForSaleId] ORDER BY StartDate DESC) as RN
+from dbo.rltRealEstateForSale
+)
+
+select * from CTE_TEMP where RN = 1</property>
                     <property
                       dataType="System.String"
                       description="Specifies a SQL statement that uses parameters to generate the lookup table."
                       expressionType="Notify"
                       name="SqlCommandParam"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[rltRealEstateForSale]) [refTable]
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (WITH CTE_TEMP as
+(
+select * 
+,ROW_NUMBER() OVER (PARTITION BY [RealEstateForSaleId] ORDER BY StartDate DESC) as RN
+from dbo.rltRealEstateForSale
+)
+
+select * from CTE_TEMP where RN = 1) [refTable]
 where [refTable].[Address] = ?</property>
                     <property
                       dataType="System.Int32"
@@ -2745,7 +2770,7 @@ where [refTable].[Address] = ?</property>
                     <property
                       dataType="System.String"
                       description="Indicates whether to reference metadata in an XML format."
-                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="RealEstateForSaleKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RealEstateForSaleId" dataType="DT_STR" length="200" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Price" dataType="DT_NUMERIC" length="0" precision="18" scale="2" codePage="0"/&gt;&lt;referenceColumn name="Address" dataType="DT_STR" length="2000" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="NeighbourHood" dataType="DT_STR" length="500" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Bed" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Bath" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Sqft" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Title" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="YearsOld" dataType="DT_STR" length="100" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="ListedBy" dataType="DT_STR" length="2000" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Note" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="StartDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="EndDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Page" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Source" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="RealEstateForSaleKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RealEstateForSaleId" dataType="DT_STR" length="200" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Price" dataType="DT_NUMERIC" length="0" precision="18" scale="2" codePage="0"/&gt;&lt;referenceColumn name="Address" dataType="DT_STR" length="2000" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="NeighbourHood" dataType="DT_STR" length="500" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Bed" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Bath" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Sqft" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Title" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="YearsOld" dataType="DT_STR" length="100" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="ListedBy" dataType="DT_STR" length="2000" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Note" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="StartDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="EndDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Page" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Source" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="RN" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                     <property
                       containsID="true"
                       dataType="System.String"
@@ -4705,7 +4730,7 @@ from CTE where RN = 1</property>
         <NodeLayout
           Size="183.2,41.6"
           Id="Package\Process Day by Day\Load Relational Table\Lookup relational table"
-          TopLeft="338.333319889175,6.93333338843451" />
+          TopLeft="338.333319889175,7.93333338843452" />
         <NodeLayout
           Size="145.6,41.6"
           Id="Package\Process Day by Day\Load Relational Table\Row Sampling"
@@ -4753,14 +4778,12 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Process Day by Day\Load Relational Table.Paths[OLE DB Source Output]"
-          TopLeft="185.333332008786,29.4666667355432">
+          TopLeft="185.333332008786,29.9666667355432">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -4777,9 +4800,7 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -4801,116 +4822,114 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Process Day by Day\Load Relational Table.Paths[No change]"
-          TopLeft="315.133323862818,142.1333341323">
+          TopLeft="339.399990529485,142.1333341323">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="122.666661633386,29.4666672314538"
+              EndConnector="98.3999949667194,29.466667231454"
               Start="0,0"
-              End="122.666661633386,21.9666672314538">
+              End="98.3999949667194,21.966667231454">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,10.7333336157269" />
+                    End="0,7.96893493731224" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,10.7333336157269"
-                    Point2="0,14.7333336157269"
-                    Point3="4,14.7333336157269" />
+                    Point1="0,7.96893493731224"
+                    Point2="0,11.9689349373122"
+                    Point3="4,11.9689349373122" />
                   <mssgle:LineSegment
-                    End="118.666661633386,14.7333336157269" />
+                    End="94.3999949667194,11.9689349373122" />
                   <mssgle:CubicBezierSegment
-                    Point1="118.666661633386,14.7333336157269"
-                    Point2="122.666661633386,14.7333336157269"
-                    Point3="122.666661633386,18.7333336157269" />
+                    Point1="94.3999949667194,11.9689349373122"
+                    Point2="98.3999949667194,11.9689349373122"
+                    Point3="98.3999949667194,15.9689349373122" />
                   <mssgle:LineSegment
-                    End="122.666661633386,21.9666672314538" />
+                    End="98.3999949667194,21.966667231454" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="37.311983160443,19.7333336157269,48.0426953125,11.6630859375"
+              BoundingBox="25.1786498271097,16.9689349373122,48.0426953125,11.6630859375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Process Day by Day\Load Relational Table.Paths[Lookup No Match Output]"
-          TopLeft="521.533319889174,27.7333333884345">
+          TopLeft="521.533319889175,28.7333333884345">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="135.133320683904,56.3333337810304"
+              EndConnector="135.133320683904,55.3333337810304"
               Start="0,0"
-              End="127.633320683904,56.3333337810304">
+              End="127.633320683904,55.3333337810304">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="63.5666603419522,0" />
+                    End="63.5666603419521,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="63.5666603419522,0"
-                    Point2="67.5666603419522,0"
-                    Point3="67.5666603419522,4" />
+                    Point1="63.5666603419521,0"
+                    Point2="67.5666603419521,0"
+                    Point3="67.5666603419521,4" />
                   <mssgle:LineSegment
-                    End="67.5666603419522,52.3333337810304" />
+                    End="67.5666603419521,51.3333337810304" />
                   <mssgle:CubicBezierSegment
-                    Point1="67.5666603419522,52.3333337810304"
-                    Point2="67.5666603419522,56.3333337810304"
-                    Point3="71.5666603419522,56.3333337810304" />
+                    Point1="67.5666603419521,51.3333337810304"
+                    Point2="67.5666603419521,55.3333337810304"
+                    Point3="71.5666603419521,55.3333337810304" />
                   <mssgle:LineSegment
-                    End="127.633320683904,56.3333337810304" />
+                    End="127.633320683904,55.3333337810304" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="11.7602736232022,-17.609375,111.6127734375,11.609375"
+              BoundingBox="11.7602736232021,-17.609375,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Process Day by Day\Load Relational Table.Paths[Lookup Match Output]"
-          TopLeft="429.933319889175,48.5333333884345">
+          TopLeft="429.933319889175,49.5333333884345">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-114.799996026357,52.0000007438655"
+              EndConnector="-114.799996026357,51.0000007438655"
               Start="0,0"
-              End="-114.799996026357,44.5000007438655">
+              End="-114.799996026357,43.5000007438655">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,22.0000003719327" />
+                    End="0,21.5000003719327" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,22.0000003719327"
-                    Point2="0,26.0000003719327"
-                    Point3="-4,26.0000003719327" />
+                    Point1="0,21.5000003719327"
+                    Point2="0,25.5000003719327"
+                    Point3="-4,25.5000003719327" />
                   <mssgle:LineSegment
-                    End="-110.799996026357,26.0000003719327" />
+                    End="-110.799996026357,25.5000003719327" />
                   <mssgle:CubicBezierSegment
-                    Point1="-110.799996026357,26.0000003719327"
-                    Point2="-114.799996026357,26.0000003719327"
-                    Point3="-114.799996026357,30.0000003719327" />
+                    Point1="-110.799996026357,25.5000003719327"
+                    Point2="-114.799996026357,25.5000003719327"
+                    Point3="-114.799996026357,29.5000003719327" />
                   <mssgle:LineSegment
-                    End="-114.799996026357,44.5000007438655" />
+                    End="-114.799996026357,43.5000007438655" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-105.591384731928,31.0000003719327,96.3827734375,11.609375"
+              BoundingBox="-105.591384731928,30.5000003719327,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -4933,9 +4952,7 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -4970,7 +4987,7 @@ from CTE where RN = 1</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-87.8805305759113,17.2126461348376,34.627734375,11.6630859375"
+              BoundingBox="-87.8805305759114,17.2126461348376,34.627734375,11.6630859375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -4983,17 +5000,17 @@ from CTE where RN = 1</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[rltRealEstateForSale]</Value>
+          type="q3:string"></Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

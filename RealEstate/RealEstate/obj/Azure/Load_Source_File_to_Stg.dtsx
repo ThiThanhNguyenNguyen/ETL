@@ -11,8 +11,8 @@
   DTS:LocaleID="4105"
   DTS:ObjectName="Load_Source_File_to_Stg"
   DTS:PackageType="5"
-  DTS:VersionBuild="40"
-  DTS:VersionGUID="{407A37C2-C812-4B1D-8C61-4B739337A419}">
+  DTS:VersionBuild="44"
+  DTS:VersionGUID="{823BC740-792B-402B-9507-63175BBD209F}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -202,12 +202,12 @@
       DTS:CreationName=""
       DTS:DTSID="{9DF81718-0220-4101-A8A8-229293DBACE3}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="@[User::Folder]+ @[User::SubFolder]+&quot;\\_&quot;+ @[User::FileName]"
+      DTS:Expression="@[User::Folder]+ @[User::SubFolder]+ &quot;\\Processed\\&quot;+ @[User::FileName]"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="NewFileNamePath">
       <DTS:VariableValue
-        DTS:DataType="8">C:\Users\nguye\OneDrive\Desktop\csvFiles\_RealEstatesForSale_2021-07-26.csv</DTS:VariableValue>
+        DTS:DataType="8">C:\Users\nguye\OneDrive\Desktop\csvFiles\Processed\RealEstatesForSale_2021-07-26.csv</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -1001,18 +1001,18 @@
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Loop CSV Files\Renaming CSV Files"
+          DTS:refId="Package\Loop CSV Files\Move CSV Files"
           DTS:CreationName="Microsoft.FileSystemTask"
           DTS:Description="File System Task"
           DTS:DTSID="{7B32874E-593B-422C-99EE-30B463775BFA}"
           DTS:ExecutableType="Microsoft.FileSystemTask"
           DTS:LocaleID="-1"
-          DTS:ObjectName="Renaming CSV Files"
+          DTS:ObjectName="Move CSV Files"
           DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <FileSystemData
-              TaskOperationType="RenameFile"
+              TaskOperationType="MoveFile"
               TaskOverwriteDestFile="True"
               TaskSourcePath="User::FileNamePath"
               TaskIsSourceVariable="True"
@@ -1029,7 +1029,7 @@
           DTS:From="Package\Loop CSV Files\Data Flow Task"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint"
-          DTS:To="Package\Loop CSV Files\Renaming CSV Files" />
+          DTS:To="Package\Loop CSV Files\Move CSV Files" />
       </DTS:PrecedenceConstraints>
       <DTS:ForEachVariableMappings>
         <DTS:ForEachVariableMapping
@@ -1072,23 +1072,23 @@
           Id="Package\Loop CSV Files\Data Flow Task"
           TopLeft="62.5333308166929,54.0000014464062" />
         <NodeLayout
-          Size="175.2,41.6"
-          Id="Package\Loop CSV Files\Renaming CSV Files"
-          TopLeft="51.0333303199875,149.800002252261" />
+          Size="152.8,41.6"
+          Id="Package\Loop CSV Files\Move CSV Files"
+          TopLeft="61.0333299226232,151.53333559937" />
         <EdgeLayout
           Id="Package\Loop CSV Files.PrecedenceConstraints[Constraint]"
-          TopLeft="138.18333056834,95.6000014464062">
+          TopLeft="137.583330369658,95.6000014464062">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,54.2000008058546"
+              EndConnector="0,55.9333341529635"
               Start="0,0"
-              End="0,46.7000008058546">
+              End="0,48.4333341529635">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,46.7000008058546" />
+                    End="0,48.4333341529635" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1133,7 +1133,7 @@
     design-time-name="Package\Loop CSV Files\Data Flow Task">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="151.2,41.6"
           Id="Package\Loop CSV Files\Data Flow Task\Flat File Source"
@@ -1173,7 +1173,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
