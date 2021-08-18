@@ -8,6 +8,9 @@
         <UseWinAuth>false</UseWinAuth>
         <WinAuthUserName />
         <WinAuthDomain />
+        <ServerName>.</ServerName>
+        <PathOnServer>/SSISDB/WebScraping/RealEstate</PathOnServer>
+        <StartObjectID>Load_from_Stg_to_Core_Tables.dtsx</StartObjectID>
         <UserIDs />
         <UserPasswords />
         <OfflineMode>false</OfflineMode>

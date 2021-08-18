@@ -2,7 +2,7 @@
 <BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ProjectInfo>
     <Name>RealEstate</Name>
-    <LastWriteTime>2021-08-02T15:26:04.1748966Z</LastWriteTime>
+    <LastWriteTime>2021-08-13T20:17:48.4598821Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
@@ -13,7 +13,7 @@
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>Load_from_Stg_to_Core_Tables.dtsx</Name>
-      <LastWriteTime>2021-08-04T23:21:15.2139461Z</LastWriteTime>
+      <LastWriteTime>2021-08-13T21:43:19.1372822Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>

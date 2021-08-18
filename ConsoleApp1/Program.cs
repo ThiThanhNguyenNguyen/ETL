@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using HtmlAgilityPack;
 using System.IO;
@@ -38,7 +38,7 @@ namespace GetHouseSaleInfo
             {
               // Determine total page of the website
                 HtmlWeb web_ = new HtmlWeb();
-                HtmlDocument doc_ = web_.Load("https://www.zolo.ca/index.php?sarea=&s=1");
+                HtmlDocument doc_ = web_.Load("https://www.zolo.ca/toronto-real-estate");
                 var xPath_ = @"//nav[@class='xs-hide md-flex']/a[@class='button button--mono button--large xs-mr1']"; 
                 var page = doc_.DocumentNode.SelectNodes(xPath_);
                 int totalPages = -1;
@@ -59,7 +59,7 @@ namespace GetHouseSaleInfo
                 }
                
 
-                string url = "https://www.zolo.ca/index.php?sarea=&s=";
+                string url = "https://www.zolo.ca/toronto-real-estate/page-";
                
                 string dateString = DateTime.Now.ToString("yyyy'-'MM'-'dd");
                 string path = "C:/Users/nguye/OneDrive/Desktop/csvFiles/RealEstatesForSale_" + dateString + ".csv";
