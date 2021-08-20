@@ -16,14 +16,42 @@ WHERE
 	1=1
 	AND a.[PRICE] IS NOT NULL 
 	AND b.[NeighbourHood] <> '' 
-	AND SUBSTRING(CAST(DateKey AS VARCHAR(100)),5,2) = @month
-	AND SUBSTRING(CAST(DateKey AS VARCHAR(100)),1,4) = @year
+	AND SUBSTRING(CAST(DateKey AS VARCHAR(100)),5,2) = '08'
+	AND SUBSTRING(CAST(DateKey AS VARCHAR(100)),1,4) = '2021'
 GROUP BY a.[DateKey], b.[NeighbourHood]	
 ORDER BY a.[DateKey], b.[NeighbourHood]
 
-SELECT  count(DateKey)
+
+SELECT  
+	[DateKey],
+	SUBSTRING(CAST([DateKey] AS VARCHAR(100)),7,2) AS SingleDay,
+	FORMAT(ROUND(AVG([Price]),2),'###############.##') AS AvgListingPrice
+FROM [DataMart].[dbo].[factRealEstateForSale]  with(nolock)
+WHERE
+	1=1
+	AND [PRICE] IS NOT NULL 
+	AND SUBSTRING(CAST([DateKey] AS VARCHAR(100)),5,2) = '08'
+	AND SUBSTRING(CAST([DateKey] AS VARCHAR(100)),1,4) = '2021'
+GROUP BY [DateKey], SUBSTRING(CAST([DateKey] AS VARCHAR(100)),5,2)
+ORDER BY [DateKey]
+
+
+SELECT  
+	[DateKey],
+	FORMAT(ROUND(AVG([Price]),2),'###############.##')
+FROM [DataMart].[dbo].[factRealEstateForSale]  with(nolock)
+WHERE
+	1=1
+	AND [PRICE] IS NOT NULL 
+	AND SUBSTRING(CAST([DateKey] AS VARCHAR(100)),5,2) = '08'
+	AND SUBSTRING(CAST([DateKey] AS VARCHAR(100)),1,4) = '2021'
+GROUP BY [DateKey]
+ORDER BY [DateKey]
+
+SELECT  [DateKey], count(DateKey) AS TotalItem
 FROM [DataMart].[dbo].[factRealEstateForSale] with(nolock)
-WHERE DateKey = '20210723'
+GROUP BY [DateKey]
+--WHERE DateKey = '20210723'
 
 SELECT distinct SUBSTRING(CAST(DateKey AS VARCHAR(100)),5,2) as Months
 FROM [DataMart].[dbo].[factRealEstateForSale] with(nolock)
@@ -32,6 +60,10 @@ ORDER BY months
 SELECT distinct SUBSTRING(CAST(DateKey AS VARCHAR(100)),1,4) as Years
 FROM [DataMart].[dbo].[factRealEstateForSale] with(nolock)
 ORDER BY years
+
+SELECT CAST(YEAR(GETDATE()) AS VARCHAR(10)) AS CurrentYear
+
+SELECT RIGHT('00' + CAST(MONTH(GETDATE()) AS VARCHAR(10)),2) AS CurrentMonth
 
 
 ---------------------

@@ -517,7 +517,7 @@ ORDER BY [DateKey]</CommandText>
             </ChartNoDataMessage>
             <DataSetName>AverageListingPrice</DataSetName>
             <Height>14.0015cm</Height>
-            <Width>21.463cm</Width>
+            <Width>24.3205cm</Width>
             <ToolTip>=Sum(Fields!AvgListingPrice.Value, "AverageListingPrice")</ToolTip>
             <Style>
               <Border>
@@ -532,7 +532,7 @@ ORDER BY [DateKey]</CommandText>
         <Height>5.5124in</Height>
         <Style />
       </Body>
-      <Width>8.45in</Width>
+      <Width>9.575in</Width>
       <Page>
         <PageHeader>
           <Height>2.94217cm</Height>
@@ -620,7 +620,7 @@ ORDER BY [DateKey]</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.3622cm</Top>
-              <Left>1.0287cm</Left>
+              <Left>1.76953cm</Left>
               <Height>1.19267cm</Height>
               <Width>6.90267cm</Width>
               <Style>
@@ -652,7 +652,7 @@ ORDER BY [DateKey]</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
               <Top>0.7432cm</Top>
-              <Left>18.87834cm</Left>
+              <Left>21.48184cm</Left>
               <Height>0.81167cm</Height>
               <Width>2.58466cm</Width>
               <ZIndex>1</ZIndex>
@@ -685,7 +685,7 @@ ORDER BY [DateKey]</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.3622cm</Top>
-              <Left>10.44787cm</Left>
+              <Left>12.09887cm</Left>
               <Height>1.19267cm</Height>
               <Width>4.786cm</Width>
               <ZIndex>2</ZIndex>
