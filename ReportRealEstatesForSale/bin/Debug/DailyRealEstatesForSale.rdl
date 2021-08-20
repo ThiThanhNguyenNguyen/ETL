@@ -196,6 +196,17 @@ ORDER BY AverageListingPrice</CommandText>
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="CurrentDay">
+      <SharedDataSet>
+        <SharedDataSetReference>CurrentDay</SharedDataSetReference>
+      </SharedDataSet>
+      <Fields>
+        <Field Name="CurrentDay">
+          <DataField>CurrentDay</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -328,7 +339,7 @@ ORDER BY AverageListingPrice</CommandText>
                         <Color>Lime</Color>
                         <Style>None</Style>
                       </Border>
-                      <FontSize>8pt</FontSize>
+                      <FontSize>9pt</FontSize>
                       <Color>#5c5c5c</Color>
                     </Style>
                     <ChartAxisTitle>
@@ -616,7 +627,7 @@ ORDER BY AverageListingPrice</CommandText>
             <DataSetName>AverageListingPrice</DataSetName>
             <Left>0.31044cm</Left>
             <Height>14.0015cm</Height>
-            <Width>24.3205cm</Width>
+            <Width>28.9122cm</Width>
             <ToolTip>=Sum(Fields!AvgListingPrice.Value, "AverageListingPrice")</ToolTip>
             <Style>
               <Border>
@@ -994,7 +1005,7 @@ ORDER BY AverageListingPrice</CommandText>
             <Top>14.3002cm</Top>
             <Left>0.31044cm</Left>
             <Height>10.62095cm</Height>
-            <Width>24.3205cm</Width>
+            <Width>28.9122cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -1081,7 +1092,7 @@ ORDER BY AverageListingPrice</CommandText>
                         <Color>Gainsboro</Color>
                         <Style>None</Style>
                       </Border>
-                      <FontSize>8pt</FontSize>
+                      <FontSize>9pt</FontSize>
                       <Color>#5c5c5c</Color>
                     </Style>
                     <ChartAxisTitle>
@@ -1127,6 +1138,7 @@ ORDER BY AverageListingPrice</CommandText>
                     <CrossAt>NaN</CrossAt>
                     <Minimum>NaN</Minimum>
                     <Maximum>NaN</Maximum>
+                    <LabelsAutoFitDisabled>true</LabelsAutoFitDisabled>
                     <ChartAxisScaleBreak>
                       <Style />
                     </ChartAxisScaleBreak>
@@ -1365,7 +1377,7 @@ ORDER BY AverageListingPrice</CommandText>
             <Top>25.51381cm</Top>
             <Left>0.31044cm</Left>
             <Height>10.62095cm</Height>
-            <Width>24.3205cm</Width>
+            <Width>28.9122cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -1380,7 +1392,7 @@ ORDER BY AverageListingPrice</CommandText>
         <Height>14.22628in</Height>
         <Style />
       </Body>
-      <Width>9.72164in</Width>
+      <Width>11.50498in</Width>
       <Page>
         <PageHeader>
           <Height>2.94217cm</Height>
@@ -1604,8 +1616,8 @@ ORDER BY AverageListingPrice</CommandText>
       <DataType>String</DataType>
       <DefaultValue>
         <DataSetReference>
-          <DataSetName>Days</DataSetName>
-          <ValueField>Days</ValueField>
+          <DataSetName>CurrentDay</DataSetName>
+          <ValueField>CurrentDay</ValueField>
         </DataSetReference>
       </DefaultValue>
       <Prompt>Day</Prompt>

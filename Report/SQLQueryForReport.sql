@@ -70,3 +70,24 @@ SELECT RIGHT('00' + CAST(MONTH(GETDATE()) AS VARCHAR(10)),2) AS CurrentMonth
 
 SELECT SUBSTRING(CAST(DateKey AS VARCHAR(100)),5,2) AS 'Month'
 FROM [DataMart].[dbo].[factRealEstateForSale]
+
+
+------------------------------------
+
+SELECT  TOP 10
+	b.[NeighbourHood],
+	ROUND(AVG(a.[Price]),2) AS AverageListingPrice
+FROM [DataMart].[dbo].[factRealEstateForSale]  a with(nolock)
+INNER JOIN [DataMart].[dbo].[rltRealEstateForSale] b with(nolock)
+ON a.[RealEstateForSaleKey] = b.[RealEstateForSaleKey] 
+WHERE
+	1=1
+	AND a.[PRICE] IS NOT NULL 
+	AND b.[NeighbourHood] <> ''
+	AND SUBSTRING(CAST(DateKey AS VARCHAR(100)),7,2) = '23'
+	AND SUBSTRING(CAST(DateKey AS VARCHAR(100)),5,2) = '07'
+	AND SUBSTRING(CAST(DateKey AS VARCHAR(100)),1,4) = '2021'
+GROUP BY b.[NeighbourHood]	
+ORDER BY AverageListingPrice-- DESC
+
+SELECT RIGHT('00' + CAST(DAY(GETDATE()) AS VARCHAR(10)),2) AS CurrentDay
