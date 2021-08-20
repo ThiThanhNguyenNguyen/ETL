@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>DataMart</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@pMonth">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT distinct SUBSTRING(CAST(DateKey AS VARCHAR(100)),7,2) as Days
+FROM [DataMart].[dbo].[factRealEstateForSale] with(nolock)
+WHERE SUBSTRING(CAST(DateKey AS VARCHAR(100)),5,2) = @pMonth
+ORDER BY Days</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Days">
+        <DataField>Days</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

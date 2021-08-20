@@ -51,6 +51,7 @@
   <ItemGroup>
     <DataSet Include="CurrentMonth.rsd" />
     <DataSet Include="CurrentYear.rsd" />
+    <DataSet Include="Days.rsd" />
     <DataSet Include="Months.rsd" />
     <DataSet Include="Years.rsd" />
   </ItemGroup>
