@@ -21,6 +21,18 @@ WHERE
 GROUP BY a.[DateKey], b.[NeighbourHood]	
 ORDER BY a.[DateKey], b.[NeighbourHood]
 
+SELECT  count(DateKey)
+FROM [DataMart].[dbo].[factRealEstateForSale] with(nolock)
+WHERE DateKey = '20210723'
+
+SELECT distinct SUBSTRING(CAST(DateKey AS VARCHAR(100)),5,2) as Months
+FROM [DataMart].[dbo].[factRealEstateForSale] with(nolock)
+ORDER BY months
+
+SELECT distinct SUBSTRING(CAST(DateKey AS VARCHAR(100)),1,4) as Years
+FROM [DataMart].[dbo].[factRealEstateForSale] with(nolock)
+ORDER BY years
+
 
 ---------------------
 
