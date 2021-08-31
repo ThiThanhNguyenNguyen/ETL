@@ -1,0 +1,32 @@
+SELECT  
+SUBSTRING(CAST([a.DateKey] AS VARCHAR(10)),7,2) AS SingleDay,
+	[a.DateKey],
+	ROUND(AVG([a.Price]),2) AS AvgListingPrice,
+                COUNT ([a.DateKey]) AS TotalItem
+FROM [DataMart].[dbo].[factRealEstateForSale]  with(nolock) a
+LEFT JOIN [DataMart].[dbo].[neighbourHood]  with(nolock) b
+ON a.NeighbourHoodId = b.neighbourHoodId
+WHERE
+	1=1
+	AND [PRICE] IS NOT NULL
+	AND SUBSTRING(CAST([a.DateKey] AS VARCHAR(100)),5,2) IN (@pMonth)
+	AND SUBSTRING(CAST([a.DateKey] AS VARCHAR(100)),1,4) IN (@pYear)
+GROUP BY [a.DateKey],
+ORDER BY [a.DateKey]
+
+
+=================================================
+
+SELECT  
+SUBSTRING(CAST([DateKey] AS VARCHAR(10)),7,2) AS SingleDay,
+	[DateKey],
+	ROUND(AVG([Price]),2) AS AvgListingPrice,
+                COUNT ([DateKey]) AS TotalItem
+FROM [DataMart].[dbo].[factRealEstateForSale]  with(nolock)
+WHERE
+	1=1
+	AND [PRICE] IS NOT NULL
+	AND SUBSTRING(CAST([DateKey] AS VARCHAR(100)),5,2) IN (@pMonth)
+	AND SUBSTRING(CAST([DateKey] AS VARCHAR(100)),1,4) IN (@pYear)
+GROUP BY [DateKey]
+ORDER BY [DateKey]

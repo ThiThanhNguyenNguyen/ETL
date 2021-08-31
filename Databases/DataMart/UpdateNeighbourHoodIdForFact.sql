@@ -11,6 +11,7 @@ SELECT * FROM [dbo].[factRealEstateForSale]
 ALTER TABLE [dbo].[factRealEstateForSale]
 ADD NeighbourHoodId int;
 
+-- UPDATE NeighbourHoodId 
 UPDATE s
 SET s.NeighbourHoodId = t.neighbourHoodId
 FROM [DataMart].[dbo].[factRealEstateForSale] s
@@ -22,6 +23,7 @@ ON a.NeighbourHood = b.neighbourHoodName
 --WHERE a.NeighbourHood <> '' and b.neighbourHoodID is NULL
 ) t
 ON s.RealEstateForSaleKey = t.RealEstateForSaleKey
+WHERE s.NeighbourHoodId IS NULL
 
 select count(*) from 
 [dbo].[factRealEstateForSale]
@@ -32,3 +34,19 @@ FROM [dbo].[factRealEstateForSale] a
 INNER JOIN [dbo].[rltRealEstateForSale] b ON a.RealEstateForSaleKey = b.RealEstateForSaleKey
 LEFT JOIN [dbo].[neighbourHood] c ON b.NeighbourHood = c.neighbourHoodName
 Where ISNULL(a.[NeighbourHoodId],0) <> c.neighbourHoodID
+
+
+
+------- check new neighbourHood
+
+INSERT INTO [DataMart].[dbo].[neighbourHood] (NeighbourHoodName)
+SELECT DISTINCT a.NeighbourHood
+FROM [DataMart].[dbo].[rltRealEstateForSale] a
+LEFT JOIN [DataMart].[dbo].[neighbourHood] b
+ON a.NeighbourHood = b.neighbourHoodName
+WHERE a.NeighbourHood <> '' and b.neighbourHoodID IS NULL
+
+------------------List of City
+SELECT DISTINCT city
+FROM [DataMart].[dbo].[neighbourHood]
+

@@ -8,5 +8,13 @@ SELECT TOP (1000) [NeighbourHoodId]
   --where neighbourHoodID = -1
   order by neighbourHoodID
 
-  Insert into [dbo].[neighbourHood]
+  SET IDENTITY_INSERT [dbo].[neighbourHood]  ON    
+
+  Insert into [dbo].[neighbourHood]([NeighbourHoodId]
+      ,[NeighbourHoodName]
+      ,[City]
+      ,[Region]
+      ,[Province])
   values(-1,'Unknown','Unknown','Unknown','Unknown')
+
+   SET IDENTITY_INSERT [dbo].[neighbourHood]  OFF

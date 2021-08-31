@@ -20,20 +20,26 @@
           <QueryParameter Name="@pYear">
             <Value>=Parameters!pYear.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@pCity">
+            <Value>=Parameters!pCity.Value</Value>
+          </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT  
-SUBSTRING(CAST([DateKey] AS VARCHAR(10)),7,2) AS SingleDay,
-	[DateKey],
-	ROUND(AVG([Price]),2) AS AvgListingPrice,
-                COUNT ([DateKey]) AS TotalItem
-FROM [DataMart].[dbo].[factRealEstateForSale]  with(nolock)
+SUBSTRING(CAST(a.DateKey AS VARCHAR(10)),7,2) AS SingleDay,
+	a.DateKey,
+	ROUND(AVG(a.Price),2) AS AvgListingPrice,
+                COUNT (a.DateKey) AS TotalItem
+FROM [DataMart].[dbo].[factRealEstateForSale]  a with(nolock) 
+LEFT JOIN [DataMart].[dbo].[neighbourHood] b  with(nolock) 
+ON a.NeighbourHoodId = b.neighbourHoodId
 WHERE
 	1=1
-	AND [PRICE] IS NOT NULL
-	AND SUBSTRING(CAST([DateKey] AS VARCHAR(100)),5,2) IN (@pMonth)
-	AND SUBSTRING(CAST([DateKey] AS VARCHAR(100)),1,4) IN (@pYear)
-GROUP BY [DateKey]
-ORDER BY [DateKey]</CommandText>
+	AND a.PRICE IS NOT NULL
+	AND SUBSTRING(CAST(a.DateKey AS VARCHAR(100)),5,2) IN (@pMonth)
+	AND SUBSTRING(CAST(a.DateKey AS VARCHAR(100)),1,4) IN (@pYear)
+                AND b.City IN (@pCity)
+GROUP BY a.DateKey
+ORDER BY a.DateKey</CommandText>
       </Query>
       <Fields>
         <Field Name="SingleDay">
@@ -203,6 +209,17 @@ ORDER BY AverageListingPrice</CommandText>
       <Fields>
         <Field Name="CurrentDay">
           <DataField>CurrentDay</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Cities">
+      <SharedDataSet>
+        <SharedDataSetReference>Cities</SharedDataSetReference>
+      </SharedDataSet>
+      <Fields>
+        <Field Name="City">
+          <DataField>City</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -1629,6 +1646,24 @@ ORDER BY AverageListingPrice</CommandText>
         </DataSetReference>
       </ValidValues>
     </ReportParameter>
+    <ReportParameter Name="pCity">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>Cities</DataSetName>
+          <ValueField>City</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>City</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>Cities</DataSetName>
+          <ValueField>City</ValueField>
+          <LabelField>City</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1649,6 +1684,11 @@ ORDER BY AverageListingPrice</CommandText>
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>pDay</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>pCity</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

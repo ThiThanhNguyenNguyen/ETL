@@ -49,6 +49,7 @@
     <Reports>@(Report)</Reports>
   </PropertyGroup>
   <ItemGroup>
+    <DataSet Include="Cities.rsd" />
     <DataSet Include="CurrentDay.rsd" />
     <DataSet Include="CurrentMonth.rsd" />
     <DataSet Include="CurrentYear.rsd" />
