@@ -11,8 +11,8 @@
   DTS:LocaleID="4105"
   DTS:ObjectName="Load_from_Stg_to_Core_Tables"
   DTS:PackageType="5"
-  DTS:VersionBuild="107"
-  DTS:VersionGUID="{8A662079-095A-400B-BECE-500E06CAF3DB}">
+  DTS:VersionBuild="109"
+  DTS:VersionGUID="{89A031A2-F4BF-4F38-9923-EDA135257E6C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -269,6 +269,22 @@ from CTE where RN = 1</DTS:VariableValue>
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
+          DTS:refId="Package\Process Day by Day\Handle early arriving NeighbourHood Dimention"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{9E89DD97-11AC-4EF5-91C1-B16964335801}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Handle early arriving NeighbourHood Dimention"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{208BBB85-6978-41D2-9C89-33BDD7165F9C}"
+              SQLTask:SqlStatementSource="INSERT INTO [DataMart].[dbo].[neighbourHood] (NeighbourHoodName)&#xA;SELECT DISTINCT a.NeighbourHood&#xA;FROM [DataMart].[dbo].[rltRealEstateForSale] a&#xA;LEFT JOIN [DataMart].[dbo].[neighbourHood] b&#xA;ON a.NeighbourHood = b.neighbourHoodName&#xA;WHERE a.NeighbourHood &lt;&gt; '' and b.neighbourHoodID IS NULL" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
           DTS:refId="Package\Process Day by Day\Load Fact Table"
           DTS:CreationName="Microsoft.Pipeline"
           DTS:Description="Data Flow Task"
@@ -282,6 +298,166 @@ from CTE where RN = 1</DTS:VariableValue>
             <pipeline
               version="1">
               <components>
+                <component
+                  refId="Package\Process Day by Day\Load Fact Table\Lookup"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="Lookup"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[neighbourHood]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[neighbourHood]) [refTable]
+where [refTable].[NeighbourHoodName] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="NeighbourHoodId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="NeighbourHoodName" dataType="DT_STR" length="200" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="City" dataType="DT_STR" length="200" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Region" dataType="DT_STR" length="200" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Province" dataType="DT_STR" length="200" precision="0" scale="0" codePage="1252"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Process Day by Day\Load Fact Table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NeighbourHood]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Process Day by Day\Load Fact Table\Lookup.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.DataMart]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.DataMart]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Process Day by Day\Load Fact Table\Lookup.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Process Day by Day\Load Fact Table\Lookup.Inputs[Lookup Input].Columns[NeighbourHood]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="500"
+                          cachedName="NeighbourHood"
+                          lineageId="Package\Process Day by Day\Load Fact Table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NeighbourHood]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">NeighbourHoodName</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Process Day by Day\Load Fact Table\Lookup.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup Match Output].Columns[NeighbourHoodId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup Match Output].Columns[NeighbourHoodId]"
+                          name="NeighbourHoodId"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">NeighbourHoodId</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Process Day by Day\Load Fact Table\Lookup.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Process Day by Day\Load Fact Table\Lookup.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
                 <component
                   refId="Package\Process Day by Day\Load Fact Table\OLE DB Destination"
                   componentClassID="Microsoft.OLEDBDestination"
@@ -382,6 +558,12 @@ from CTE where RN = 1</DTS:VariableValue>
                           cachedName="DateKey"
                           externalMetadataColumnId="Package\Process Day by Day\Load Fact Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
                           lineageId="Package\Process Day by Day\Load Fact Table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DateKey]" />
+                        <inputColumn
+                          refId="Package\Process Day by Day\Load Fact Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NeighbourHoodId]"
+                          cachedDataType="i4"
+                          cachedName="NeighbourHoodId"
+                          externalMetadataColumnId="Package\Process Day by Day\Load Fact Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NeighbourHoodId]"
+                          lineageId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup Match Output].Columns[NeighbourHoodId]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -405,6 +587,10 @@ from CTE where RN = 1</DTS:VariableValue>
                           name="Price"
                           precision="18"
                           scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\Process Day by Day\Load Fact Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NeighbourHoodId]"
+                          dataType="i4"
+                          name="NeighbourHoodId" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -902,8 +1088,13 @@ from CTE where RN = 1</DTS:VariableValue>
               </components>
               <paths>
                 <path
-                  refId="Package\Process Day by Day\Load Fact Table.Paths[OLE DB Source Output]"
+                  refId="Package\Process Day by Day\Load Fact Table.Paths[Lookup Match Output]"
                   endId="Package\Process Day by Day\Load Fact Table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Process Day by Day\Load Fact Table\Lookup.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Process Day by Day\Load Fact Table.Paths[OLE DB Source Output]"
+                  endId="Package\Process Day by Day\Load Fact Table\Lookup.Inputs[Lookup Input]"
                   name="OLE DB Source Output"
                   startId="Package\Process Day by Day\Load Fact Table\OLE DB Source.Outputs[OLE DB Source Output]" />
               </paths>
@@ -4490,11 +4681,11 @@ from CTE where RN = 1</property>
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Process Day by Day.PrecedenceConstraints[Constraint 1]"
           DTS:CreationName=""
-          DTS:DTSID="{C693AA84-0051-4224-86EB-31E096FFD451}"
+          DTS:DTSID="{FE314496-6409-494F-9717-E04840601B7B}"
           DTS:From="Package\Process Day by Day\Load Relational Table"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 1"
-          DTS:To="Package\Process Day by Day\Load Fact Table" />
+          DTS:To="Package\Process Day by Day\Handle early arriving NeighbourHood Dimention" />
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Process Day by Day.PrecedenceConstraints[Constraint 2]"
           DTS:CreationName=""
@@ -4503,6 +4694,14 @@ from CTE where RN = 1</property>
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 2"
           DTS:To="Package\Process Day by Day\Close Inactive Record" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Day by Day.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{0F55C527-0AAD-4527-A87C-8313D9F591B6}"
+          DTS:From="Package\Process Day by Day\Handle early arriving NeighbourHood Dimention"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Process Day by Day\Load Fact Table" />
       </DTS:PrecedenceConstraints>
       <DTS:ForEachVariableMappings>
         <DTS:ForEachVariableMapping
@@ -4551,7 +4750,7 @@ from CTE where RN = 1</property>
         <NodeLayout
           Size="153.6,41.6"
           Id="Package\Process Day by Day\Load Fact Table"
-          TopLeft="53.3333208825859,248.466669525041" />
+          TopLeft="53.3333208825859,321.113729367418" />
         <NodeLayout
           Size="179.2,41.6"
           Id="Package\Process Day by Day\Load Relational Table"
@@ -4570,28 +4769,6 @@ from CTE where RN = 1</property>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,27.1666672727809" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Process Day by Day.PrecedenceConstraints[Constraint 1]"
-          TopLeft="131.366659696235,211.666669525042">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,36.7999999999986"
-              Start="0,0"
-              End="0,29.2999999999986">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,29.2999999999986" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4622,27 +4799,87 @@ from CTE where RN = 1</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="264,345.6"
-          Size="264,388.8"
-          Id="Package\Process Day by Day"
-          TopLeft="226.666657659743,118.600000929833" />
+        <NodeLayout
+          Size="208.8,41.6"
+          Id="Package\Process Day by Day\Handle early arriving NeighbourHood Dimention"
+          TopLeft="31.9285718786473,245.6823548609" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="361.083323316442,82.6666668595208">
+          Id="Package\Process Day by Day.PrecedenceConstraints[Constraint 1]"
+          TopLeft="134.464285194266,211.666669525042">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,35.9333340703122"
+              EndConnector="0,34.0156853358578"
               Start="0,0"
-              End="0,28.4333340703122">
+              End="0,26.5156853358578">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,28.4333340703122" />
+                    End="0,26.5156853358578" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Day by Day.PrecedenceConstraints[Constraint 3]"
+          TopLeft="133.230946380617,287.2823548609">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.8313745065182"
+              Start="0,0"
+              End="0,26.3313745065182">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.3313745065182" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="408.8,500"
+          Size="408.8,543.2"
+          Id="Package\Process Day by Day"
+          TopLeft="226.666657659743,118.600000929833" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="363.499988973141,82.6666668595208">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="67.566668686602,35.9333340703122"
+              Start="0,0"
+              End="67.566668686602,28.4333340703122">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.9666670351561" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.9666670351561"
+                    Point2="0,17.9666670351561"
+                    Point3="4,17.9666670351561" />
+                  <mssgle:LineSegment
+                    End="63.566668686602,17.9666670351561" />
+                  <mssgle:CubicBezierSegment
+                    Point1="63.566668686602,17.9666670351561"
+                    Point2="67.566668686602,17.9666670351561"
+                    Point3="67.566668686602,21.9666670351561" />
+                  <mssgle:LineSegment
+                    End="67.566668686602,28.4333340703122" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4658,36 +4895,86 @@ from CTE where RN = 1</property>
     design-time-name="Package\Process Day by Day\Load Fact Table">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="152,41.6"
           Id="Package\Process Day by Day\Load Fact Table\OLE DB Source"
-          TopLeft="108,112" />
+          TopLeft="187.285715635942,46.9999990883996" />
         <NodeLayout
           Size="171.2,41.6"
           Id="Package\Process Day by Day\Load Fact Table\OLE DB Destination"
-          TopLeft="104.833351976341,227.466666177644" />
+          TopLeft="219.833353934779,221.349019033023" />
+        <NodeLayout
+          Size="112.8,41.6"
+          Id="Package\Process Day by Day\Load Fact Table\Lookup"
+          TopLeft="220.000003746578,124.176471993173" />
         <EdgeLayout
           Id="Package\Process Day by Day\Load Fact Table.Paths[OLE DB Source Output]"
-          TopLeft="187.21667598817,153.6">
+          TopLeft="263.285715635942,88.5999990883996">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,73.8666661776438"
+              EndConnector="13.1142881106358,35.576472904773"
               Start="0,0"
-              End="0,66.3666661776438">
+              End="13.1142881106358,28.076472904773">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,66.3666661776438" />
+                    End="0,13.7882364523865" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.7882364523865"
+                    Point2="0,17.7882364523865"
+                    Point3="4,17.7882364523865" />
+                  <mssgle:LineSegment
+                    End="9.11428811063581,17.7882364523865" />
+                  <mssgle:CubicBezierSegment
+                    Point1="9.11428811063581,17.7882364523865"
+                    Point2="13.1142881106358,17.7882364523865"
+                    Point3="13.1142881106358,21.7882364523865" />
+                  <mssgle:LineSegment
+                    End="13.1142881106358,28.076472904773" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Day by Day\Load Fact Table.Paths[Lookup Match Output]"
+          TopLeft="276.400003746578,165.776471993173">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29.0333501882016,55.5725470398502"
+              Start="0,0"
+              End="29.0333501882016,48.0725470398502">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.7862735199251" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.7862735199251"
+                    Point2="0,27.7862735199251"
+                    Point3="4,27.7862735199251" />
+                  <mssgle:LineSegment
+                    End="25.0333501882016,27.7862735199251" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25.0333501882016,27.7862735199251"
+                    Point2="29.0333501882016,27.7862735199251"
+                    Point3="29.0333501882016,31.7862735199251" />
+                  <mssgle:LineSegment
+                    End="29.0333501882016,48.0725470398502" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
+              BoundingBox="-33.6747116246492,32.7862735199251,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -4780,9 +5067,7 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -4804,9 +5089,7 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -4828,9 +5111,7 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -4960,9 +5241,7 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5063,6 +5342,29 @@ from CTE where RN = 1</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Process Day by Day\Load Fact Table\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[neighbourHood]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
