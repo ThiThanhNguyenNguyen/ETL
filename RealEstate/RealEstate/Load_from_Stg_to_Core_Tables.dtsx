@@ -11,8 +11,8 @@
   DTS:LocaleID="4105"
   DTS:ObjectName="Load_from_Stg_to_Core_Tables"
   DTS:PackageType="5"
-  DTS:VersionBuild="111"
-  DTS:VersionGUID="{112E5324-7319-42B4-8E45-39CE0ACD0589}">
+  DTS:VersionBuild="114"
+  DTS:VersionGUID="{1673BC98-6CBA-45D1-BA51-871EB7D774FC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -131,7 +131,7 @@ DELETE FROM [DataMart].[dbo].[factRealEstateForSale] WHERE DateKey &gt;= cast('2
       DTS:CreationName=""
       DTS:DTSID="{5456C14F-6B4D-4AA3-8956-685D20A032CD}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="&quot;&#xA;SELECT &#xA;&#x9;cast('&quot;+ @[User::DateKey] +&quot;' as int) as DateKey&#xA;&#x9;,[RealEstateForSaleKey]&#xA;      ,[RealEstateForSaleId]&#xA;      ,[Price]&#xA;      ,[Address]&#xA;      ,[NeighbourHood]&#xA;      ,[Bed]&#xA;      ,[Bath]&#xA;      ,[Sqft]&#xA;      ,[Title]&#xA;      ,[YearsOld]&#xA;      ,[ListedBy]&#xA;      ,[Note]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,[Page]&#xA;      ,[Source]&#xA;  FROM [dbo].[rltRealEstateForSale] where StartDate &lt;= '&quot;+ (DT_WSTR,30)@[User::LoadDate] +&quot;'&#xA;  AND ISNULL(EndDate,'2999-12-31') &gt; '&quot;+ (DT_WSTR,30)@[User::LoadDate] +&quot;'&quot;"
+      DTS:Expression="&quot;&#xA;SELECT &#xA;&#x9;cast('&quot;+ @[User::DateKey] +&quot;' as int) as DateKey&#xA;&#x9;,[RealEstateForSaleKey]&#xA;      ,[RealEstateForSaleId]&#xA;      ,[Price]&#xA;      ,[Address]&#xA;      ,CASE WHEN [NeighbourHood] = '' THEN 'Unknown' ELSE NeighbourHood END as NeighbourHood&#xA;      ,[Bed]&#xA;      ,[Bath]&#xA;      ,[Sqft]&#xA;      ,[Title]&#xA;      ,[YearsOld]&#xA;      ,[ListedBy]&#xA;      ,[Note]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,[Page]&#xA;      ,[Source]&#xA;  FROM [dbo].[rltRealEstateForSale] where StartDate &lt;= '&quot;+ (DT_WSTR,30)@[User::LoadDate] +&quot;'&#xA;  AND ISNULL(EndDate,'2999-12-31') &gt; '&quot;+ (DT_WSTR,30)@[User::LoadDate] +&quot;'&quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="SqlLoadFact">
@@ -143,7 +143,7 @@ SELECT
       ,[RealEstateForSaleId]
       ,[Price]
       ,[Address]
-      ,[NeighbourHood]
+      ,CASE WHEN [NeighbourHood] = '' THEN 'Unknown' ELSE NeighbourHood END as NeighbourHood
       ,[Bed]
       ,[Bath]
       ,[Sqft]
@@ -4748,7 +4748,11 @@ from CTE where RN = 1</property>
           Id="Package\Process Day by Day\Delete same day data"
           TopLeft="49.4333223727018,18.0000006198882" />
         <NodeLayout
-          Size="153.6,41.6"
+          Size="208.8,41.6"
+          Id="Package\Process Day by Day\Handle early arriving NeighbourHood Dimention"
+          TopLeft="31.9285718786473,245.6823548609" />
+        <NodeLayout
+          Size="152.8,41.6"
           Id="Package\Process Day by Day\Load Fact Table"
           TopLeft="53.3333208825859,321.113729367418" />
         <NodeLayout
@@ -4769,6 +4773,28 @@ from CTE where RN = 1</property>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,27.1666672727809" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Day by Day.PrecedenceConstraints[Constraint 1]"
+          TopLeft="134.464285194266,211.666669525042">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.0156853358578"
+              Start="0,0"
+              End="0,26.5156853358578">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5156853358578" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4799,46 +4825,20 @@ from CTE where RN = 1</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="208.8,41.6"
-          Id="Package\Process Day by Day\Handle early arriving NeighbourHood Dimention"
-          TopLeft="31.9285718786473,245.6823548609" />
-        <EdgeLayout
-          Id="Package\Process Day by Day.PrecedenceConstraints[Constraint 1]"
-          TopLeft="134.464285194266,211.666669525042">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,34.0156853358578"
-              Start="0,0"
-              End="0,26.5156853358578">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.5156853358578" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Process Day by Day.PrecedenceConstraints[Constraint 3]"
-          TopLeft="133.230946380617,287.2823548609">
+          TopLeft="133.030946380617,287.2823548609">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,33.8313745065182"
+              EndConnector="0,33.831374506518"
               Start="0,0"
-              End="0,26.3313745065182">
+              End="0,26.331374506518">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.3313745065182" />
+                    End="0,26.331374506518" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4850,8 +4850,8 @@ from CTE where RN = 1</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="408.8,396.8"
-          Size="408.8,440"
+          PanelSize="408.8,417.6"
+          Size="408.8,460.8"
           Id="Package\Process Day by Day"
           TopLeft="226.666657659743,118.600000929833" />
         <EdgeLayout
@@ -4885,13 +4885,13 @@ from CTE where RN = 1</property>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="152,41.6"
-          Id="Package\Process Day by Day\Load Fact Table\OLE DB Source"
-          TopLeft="187.285715635942,46.9999990883996" />
-        <NodeLayout
           Size="171.2,41.6"
           Id="Package\Process Day by Day\Load Fact Table\OLE DB Destination"
           TopLeft="219.833353934779,221.349019033023" />
+        <NodeLayout
+          Size="152,41.6"
+          Id="Package\Process Day by Day\Load Fact Table\OLE DB Source"
+          TopLeft="187.285715635942,46.9999990883996" />
         <NodeLayout
           Size="112.8,41.6"
           Id="Package\Process Day by Day\Load Fact Table\Lookup"
@@ -4995,6 +4995,29 @@ from CTE where RN = 1</property>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Process Day by Day\Load Fact Table\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[neighbourHood]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Process Day by Day\Load Relational Table">
     <LayoutInfo>
@@ -5055,7 +5078,9 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5077,7 +5102,9 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5099,7 +5126,9 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5229,7 +5258,9 @@ from CTE where RN = 1</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5330,29 +5361,6 @@ from CTE where RN = 1</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Process Day by Day\Load Fact Table\Lookup">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[neighbourHood]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
