@@ -611,7 +611,7 @@ ORDER BY AverageListingPrice</CommandText>
             </ChartLegends>
             <ChartTitles>
               <ChartTitle Name="Default">
-                <Caption>Average Listing Price Monthly</Caption>
+                <Caption>Average Listing Price Daily</Caption>
                 <Style>
                   <BackgroundGradientType>None</BackgroundGradientType>
                   <FontSize>16pt</FontSize>
